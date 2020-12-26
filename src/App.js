@@ -1,24 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { Route, Switch, Redirect } from "react-router-dom";
+import NotFound from './components/notFound';
+import Dashboard from './components/Dashboard';
+import Home from './components/Home';
+import Navbar from './components/Navbar';
+import Posts from './components/Posts';
+import Products from "./components/Products";
+import ProductDetails from './components/ProductsDetails';
+
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Fragment>
+      <Navbar />
+      <div className="content container mt-3">
+        <Switch>
+          <Route path="/product/:id" component={ProductDetails} />
+          <Route path="/products" render={(props)=> <Products sortBy="newProduct" {...props} /> } />
+          <Route path="/posts/:year/:month" component={Posts} />
+          <Route path="/admin" component={Dashboard} />
+          <Route path="/sorry" component={NotFound} />
+          <Route path="/" exact component={Home} />
+          <Redirect to="/sorry" />
+        </Switch>
+      </div>
+    </React.Fragment>
   );
 }
 
